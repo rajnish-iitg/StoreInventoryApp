@@ -183,7 +183,6 @@ public class ProductDataManager extends ContentProvider {
         String [] columnArgs = columns.split("|");
         String productName = null;
         Double productPrice = null;
-        Double productDiscountPrice = null;
         Integer flagOnOffer = null;
         Integer productStock = null;
         String supplier = null;
