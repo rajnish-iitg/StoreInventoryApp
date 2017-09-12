@@ -25,7 +25,6 @@
 
         <activity
             android:name="com.example.storeinventoryapp.viewcontroller.ProductEditorActivity"
-            android:label="@string/title_editor"
             android:parentActivityName="com.example.storeinventoryapp.viewcontroller.CatalogActivity"
             android:windowSoftInputMode="stateHidden">
 

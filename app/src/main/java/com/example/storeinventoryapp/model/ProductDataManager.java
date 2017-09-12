@@ -95,13 +95,7 @@ public class ProductDataManager extends ContentProvider {
 
 
     /**
-     * Function - UPDATE table
      * This method updates products
-     * @param uri
-     * @param contentValues
-     * @param selection
-     * @param selectionArgs
-     * @return int
      */
     @Override
     public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
@@ -145,7 +139,7 @@ public class ProductDataManager extends ContentProvider {
             stringBuilder.append(TAG_NAME);
         } else if (contentValues.containsKey(ProductEntity.ProductEntry.COLUMN_PRODUCT_PRICE)) {
             stringBuilder.append(SEPARATOR).append(TAG_PRICE);
-        } else if (contentValues.containsKey(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK)) {
+        } else if (contentValues.containsKey(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY)) {
             stringBuilder.append(SEPARATOR).append(TAG_STOCK);
         } else if (contentValues.containsKey(ProductEntity.ProductEntry.COLUMN_SUPPLIER_NAME)) {
             stringBuilder.append(SEPARATOR).append(TAG_SUPPLIER);
@@ -206,7 +200,7 @@ public class ProductDataManager extends ContentProvider {
                 }
             }
             else if (columnArgs[i].equals(TAG_STOCK)) {
-                productStock = values.getAsInteger(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK);
+                productStock = values.getAsInteger(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY);
                 if (productStock == null || productStock < 0) {
                     throw new IllegalArgumentException(getContext().getString(R.string.exception_invalid_stock));
                 }

@@ -25,7 +25,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -116,9 +115,10 @@ public class ProductEditorActivity extends AppCompatActivity implements LoaderMa
         // Also, for existing product, initialize a loader to fetch data from the database and
         // display the current values in the editor
         if (mCurrentProductUri == null) {
-            setTitle(getTitle() + getString(R.string.title_editor_add));
+            setTitle(getString(R.string.title_add));
+            invalidateOptionsMenu();
         } else {
-            setTitle(getTitle() + getString(R.string.title_editor_edit));
+            setTitle(getString(R.string.title_edit));
             getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
         }
 
@@ -141,7 +141,6 @@ public class ProductEditorActivity extends AppCompatActivity implements LoaderMa
      * This method initializes all UI components used in the Activity
      */
     public void initializeUIElements() {
-        mTextViewInfo = (TextView) findViewById(R.id.text_required_info);
         mTextViewError = (TextView) findViewById(R.id.text_error);
         mTextViewProduct = (TextView) findViewById(R.id.text_label_product);
         mTextViewPrice = (TextView) findViewById(R.id.text_label_price);
@@ -203,34 +202,30 @@ public class ProductEditorActivity extends AppCompatActivity implements LoaderMa
      * Method to select a picture from device's media storage
      */
     private void buttonImageClick() {
-        Intent intent = new Intent();
+        Intent imageIntent ;
 
         if (Build.VERSION.SDK_INT < 19) {
-            intent = new Intent(Intent.ACTION_GET_CONTENT);
+            imageIntent = new Intent(Intent.ACTION_GET_CONTENT);
         } else {
-            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            imageIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            imageIntent.addCategory(Intent.CATEGORY_OPENABLE);
         }
-        intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.action_select_picture)), IMAGE_REQUEST_CODE);
+        imageIntent.setType("image/*");
+        if (imageIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(Intent.createChooser(imageIntent, getString(R.string.action_select_picture)), IMAGE_REQUEST_CODE);
+        }
     }
 
-    /**
-     * Method to fetch data for an existing product into a cursor
-     * @param i
-     * @param bundle
-     * @return cursor
-     */
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        // Since the editor shows all pet attributes, define a projection that contains
-        // all columns from the pet table
+        // Since the editor shows all store attributes, define a projection that contains
+        // all columns from the store table
         String[] projection = {
                 ProductEntity.ProductEntry._ID,
                 ProductEntity.ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductEntity.ProductEntry.COLUMN_PRODUCT_PRICE,
-                ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK,
-                ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK,
+                ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY,
                 ProductEntity.ProductEntry.COLUMN_PRODUCT_IMAGE,
                 ProductEntity.ProductEntry.COLUMN_SUPPLIER_NAME,
                 ProductEntity.ProductEntry.COLUMN_SUPPLIER_PHONE,
@@ -254,7 +249,7 @@ public class ProductEditorActivity extends AppCompatActivity implements LoaderMa
 
             int productColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_NAME);
             int priceColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_PRICE);
-            int stockColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK);
+            int stockColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY);
             int imageColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_IMAGE);
             int supplierColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_SUPPLIER_NAME);
             int phoneColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_SUPPLIER_PHONE);
@@ -273,7 +268,7 @@ public class ProductEditorActivity extends AppCompatActivity implements LoaderMa
             mEditTextSupplier.setText(supplier);
             mEditTextSupplierEmail.setText(email);
             mEditTextSupplierPhone.setText(phone);
-            mEditTextProductPrice.setText(String.format("%.02f", price));
+            mEditTextProductPrice.setText(String.format("$", price));
 
             mEditTextProductStock.setText(String.valueOf(productStock));
             mImageProduct.setImageBitmap(getBitmapFromUri(Uri.parse(image)));
@@ -523,7 +518,7 @@ public class ProductEditorActivity extends AppCompatActivity implements LoaderMa
             ContentValues values = new ContentValues();
             values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_NAME, product);
             values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_PRICE, productPrice);
-            values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK, productStock);
+            values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY, productStock);
             values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_IMAGE, imagePath);
             values.put(ProductEntity.ProductEntry.COLUMN_SUPPLIER_NAME, supplier);
             values.put(ProductEntity.ProductEntry.COLUMN_SUPPLIER_PHONE, supplierPhone);
@@ -555,7 +550,7 @@ public class ProductEditorActivity extends AppCompatActivity implements LoaderMa
             ContentValues values = new ContentValues();
             values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_NAME, product);
             values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_PRICE, productPrice);
-            values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK, productStock);
+            values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY, productStock);
             values.put(ProductEntity.ProductEntry.COLUMN_SUPPLIER_NAME, supplier);
             values.put(ProductEntity.ProductEntry.COLUMN_SUPPLIER_PHONE, supplierPhone);
             values.put(ProductEntity.ProductEntry.COLUMN_SUPPLIER_EMAIL, supplierEmail);

@@ -1,18 +1,14 @@
 package com.example.storeinventoryapp.viewcontroller;
 
-import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.storeinventoryapp.R;
 import com.example.storeinventoryapp.model.ProductEntity;
@@ -94,16 +89,10 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             }
         });
 
-        // Start the loader
         getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
     }
 
-    /**
-     * Method to load the cursor with records fetched from database
-     * @param i
-     * @param bundle
-     * @return cursor
-     */
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String querySortOder = null;
@@ -117,38 +106,56 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 ProductEntity.ProductEntry._ID,
                 ProductEntity.ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductEntity.ProductEntry.COLUMN_PRODUCT_PRICE,
-                ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK
+                ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY
         };
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,                       // Parent activity context
                 ProductEntity.ProductEntry.CONTENT_URI,   // Provider content URI to query
                 projection,                                 // Columns to include in the resulting Cursor
-                selectClause,                               // No selection clause
+                null,                               // No selection clause
                 null,                                       // No selection arguments
-                querySortOder                               // Default sort order
+                null                               // Default sort order
         );
     }
 
-    /**
-     * Method to execute when cursor has finished loading
-     * @param loader
-     * @param cursor
-     */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Update {@link ProductCursorAdapter} with this new cursor containing updated data
         mCursorAdapter.swapCursor(cursor);
     }
 
-    /**
-     * Method to execute when data needs to be reset
-     * @param loader
-     */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         // Callback called when the data needs to be deleted
         mCursorAdapter.swapCursor(null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_catalog.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_catalog, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // User clicked on a menu option in the app bar overflow menu
+        switch (item.getItemId()) {
+            case R.id.action_delete_all_entries:
+                deleteAllEntries();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Helper method to delete all pets in the database.
+     */
+    private void deleteAllEntries() {
+        int rowsDeleted = getContentResolver().delete(ProductEntity.ProductEntry.CONTENT_URI, null, null);
+        Log.v("CatalogActivity", rowsDeleted + " rows deleted from database");
     }
 
 }

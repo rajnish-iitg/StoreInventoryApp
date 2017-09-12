@@ -37,7 +37,7 @@ public class ProductEntity {
 
         public final static String COLUMN_PRODUCT_PRICE ="product_price";
 
-        public final static String COLUMN_PRODUCT_STOCK ="product_stock";
+        public final static String COLUMN_PRODUCT_QUANTITY="product_quantity";
 
         public final static String COLUMN_PRODUCT_IMAGE ="product_image";
 
@@ -49,14 +49,6 @@ public class ProductEntity {
 
         public final static String COLUMN_LAST_UPDATED ="product_last_updated";
 
-        public static final int PRODUCT_ON_OFFER = 1;
-        public static final int PRODUCT_NOT_ON_OFFER = 0;
 
-        public static boolean isValidOfferFlag(int offerFlag) {
-            if (offerFlag == PRODUCT_ON_OFFER || offerFlag == PRODUCT_NOT_ON_OFFER) {
-                return true;
-            }
-            return false;
-        }
     }
 }

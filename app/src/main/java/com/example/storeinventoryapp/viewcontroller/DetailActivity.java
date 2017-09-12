@@ -2,7 +2,6 @@ package com.example.storeinventoryapp.viewcontroller;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -14,7 +13,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -73,19 +71,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         setContentView(R.layout.activity_detail);
 
         // Initialize all UI components
-        initializeUIElements();
-
-        Intent intent = getIntent();
-        mCurrentProductUri = intent.getData();
-        if(mCurrentProductUri != null) {
-            getSupportLoaderManager().initLoader(PRODUCT_LOADER, null, this);
-        }
-    }
-
-    /**
-     * This method initializes all UI components used in the Activity
-     */
-    public void initializeUIElements() {
         mTextViewLabelProduct = (TextView) findViewById(R.id.text_label_product);
         mTextViewLabelPrice = (TextView) findViewById(R.id.text_label_price);
         mTextViewLabelStock = (TextView) findViewById(R.id.text_label_stock);
@@ -104,6 +89,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         mButtonIncrease = (ImageButton) findViewById(R.id.button_increase);
         mButtonDecrease = (ImageButton) findViewById(R.id.button_decrease);
         mImageProduct = (ImageView) findViewById(R.id.image_product);
+
+        Intent intent = getIntent();
+        mCurrentProductUri = intent.getData();
+        if(mCurrentProductUri != null) {
+            getSupportLoaderManager().initLoader(PRODUCT_LOADER, null, this);
+        }
     }
 
     @Override
@@ -130,7 +121,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
             int productColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_NAME);
             int priceColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_PRICE);
-            int stockColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK);
+            int stockColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY);
             int imageColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_IMAGE);
             int supplierColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_SUPPLIER_NAME);
             int phoneColumnIndex = cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_SUPPLIER_PHONE);
@@ -146,7 +137,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             final String image = cursor.getString(imageColumnIndex);
 
             mTextViewProduct.setText(product);
-            mTextViewProductPrice.setText(String.format("%.02f", price));
+            mTextViewProductPrice.setText("$ " + String.format("%.02f", price));
             mTextViewProductStock.setText(Integer.toString(productStock));
             mTextViewSupplier.setText(supplier);
             mTextViewSupplierEmail.setText(email);
@@ -276,7 +267,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         }
 
         ContentValues values = new ContentValues();
-        values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK, newStockCount);
+        values.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY, newStockCount);
         int numRowsUpdated = getContentResolver().update(itemUri, values, null, null);
         return numRowsUpdated;
     }
@@ -346,7 +337,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
-                confirmDeleteProduct();
+                deleteProduct();
                 return true;
 
             // Respond to a click on the "Up" arrow button in the app bar
@@ -366,30 +357,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         startActivity(intent);
     }
 
-    /**
-     * Method to ask confirmation for deleting a product
-     */
-    private void confirmDeleteProduct() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.dialog_delete));
-        builder.setPositiveButton(getString(R.string.action_yes), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                deleteProduct();
-                finish();
-            }
-        });
-        builder.setNegativeButton(getString(R.string.action_no), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        // Create and show the AlertDialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
     /**
      * Method to delete the product

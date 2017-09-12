@@ -67,7 +67,7 @@ public class ProductCursorAdapter extends CursorAdapter {
         final int productId = cursor.getInt(cursor.getColumnIndex(ProductEntity.ProductEntry._ID));
         String productName = cursor.getString(cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_NAME));
         Double price = cursor.getDouble(cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_PRICE));
-        final int stock = cursor.getInt(cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK));
+        final int stock = cursor.getInt(cursor.getColumnIndex(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY));
 
         holder.textViewProductName.setText(productName);
         holder.textViewPrice.setText(mContext.getString(R.string.display_product_price, price.doubleValue()));
@@ -85,7 +85,7 @@ public class ProductCursorAdapter extends CursorAdapter {
     private void adjustStock(Context context, Uri productUri, int currentStock) {
         int newStock = (currentStock >= 1) ? currentStock - 1 : 0;
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_STOCK, newStock);
+        contentValues.put(ProductEntity.ProductEntry.COLUMN_PRODUCT_QUANTITY, newStock);
         int numRowsUpdated = context.getContentResolver().update(productUri, contentValues, null, null);
         if (!(numRowsUpdated > 0)) {
             Log.e(TAG, context.getString(R.string.error_stock_update));

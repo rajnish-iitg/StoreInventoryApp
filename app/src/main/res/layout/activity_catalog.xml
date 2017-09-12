@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/colorWhite"
     tools:context="com.example.storeinventoryapp.viewcontroller.CatalogActivity">
 
     <ListView
         android:id="@+id/list_products"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_margin"
         android:orientation="vertical"
+        android:padding="@dimen/activity_margin"
         android:divider="@android:color/transparent"
         android:dividerHeight="@dimen/activity_margin"/>
 
@@ -25,24 +24,30 @@
         android:layout_centerInParent="true">
 
         <ImageView
-            android:id="@+id/empty_shelter_image"
-            android:contentDescription="@string/default_emptystate_image"
-            android:layout_width="@dimen/empty_image_width"
-            android:layout_height="@dimen/empty_image_height"
+            android:id="@+id/bakery_image"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/image_height"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/empty_store"/>
+            android:src="@drawable/bakery" />
 
         <TextView
             android:id="@+id/text_empty_title"
-            android:layout_below="@+id/empty_shelter_image"
-            style="@style/EmptyStateTitle"
-            android:text="@string/info_empty_store_title"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bakery_image"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="@dimen/activity_margin"
+            android:text="@string/empty_store_title"
+            android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView
             android:id="@+id/text_empty_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/text_empty_title"
-            style="@style/EmptyStateSubtitle"
-            android:text="@string/info_empty_store_subtitle"/>
+            android:layout_centerHorizontal="true"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:text="@string/empty_store_subtitle" />
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -52,7 +57,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
-        android:backgroundTint="@color/colorFAB"
-        android:src="@drawable/plus_circle"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_add_white_36dp" />
 
 </RelativeLayout>

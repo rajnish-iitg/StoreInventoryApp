@@ -1,44 +1,27 @@
 <resources>
-    <string name="app_name">Store Inventory</string>
+    <string name="app_name">Bakery Store Inventory</string>
 
     <!-- Activity Titles -->
-    <string name="title_editor">Product : </string>
-    <string name="title_editor_add">\u0020\u0020Add</string>
-    <string name="title_editor_edit">\u0020\u0020Edit</string>
-    <string name="title_detail">Product Details</string>
+    <string name="title_add">Add an Item</string>
+    <string name="title_edit">Edit an Item</string>
+    <string name="title_detail">Item Details</string>
     <string name="title_settings">Product List Settings</string>
-
-
-    <!-- Default / Placeholder Strings for Views -->
-    <string name="default_product_name">Product Name</string>
-    <string name="default_product_price">Price: £15.00\u0020\u0020|\u0020\u0020</string>
-    <string name="default_product_sale_price">Sale Price: £10.00\u0020\u0020|\u0020\u0020</string>
-    <string name="default_product_stock">\u0020\u0020|\u0020\u0020Stock: 100</string>
-    <string name="default_emptystate_image">Empty State Image</string>
-    <string name="default_editor_image">Product Image Holder</string>
-    <string name="default_editor_error">Invalid entry</string>
-    <string name="default_price">$15.00</string>
-    <string name="default_stock">100</string>
-    <string name="default_email">supplier@gmail.com</string>
-    <string name="default_phone">\u002B44\u0020111\u0020222\u002D3333</string>
 
 
     <!-- Labels -->
     <string name="label_product_name">Product Name *</string>
-    <string name="label_product_name_1">Product Name</string>
+    <string name="label_product_name_detail">Product Name</string>
     <string name="label_price">Price *</string>
-    <string name="label_price_1">Price</string>
+    <string name="label_price_detail">Price</string>
     <string name="label_discount">Sale Price</string>
-    <string name="label_on_offer">Product On Offer</string>
-    <string name="label_on_offer_alert">check if Sale Price > £0.00</string>
-    <string name="label_stock">Stock *</string>
-    <string name="label_stock_1">Adjust Product Stock</string>
+    <string name="label_quantity">Stock *</string>
+    <string name="label_quantity_detail">Adjust Product Quantity</string>
     <string name="label_supplier">Supplier Name *</string>
-    <string name="label_supplier_1">Supplier Name</string>
+    <string name="label_supplier_detail">Supplier Name</string>
     <string name="label_email">Supplier Email *</string>
-    <string name="label_email_1">Supplier Email</string>
+    <string name="label_email_detail">Email</string>
     <string name="label_phone">Supplier Phone</string>
-    <string name="label_currency">\u00A3</string>
+    <string name="label_phone_detail">Phone</string>
     <string name="label_image">Add image</string>
     <string name="label_email_subject">Re: Ordering stock for %s</string>
 
@@ -51,8 +34,8 @@
 
 
     <!-- Information Messages -->
-    <string name="info_empty_store_title">Inventory is empty</string>
-    <string name="info_empty_store_subtitle">Get started by adding a product</string>
+    <string name="empty_store_title">Bakery Store is empty !</string>
+    <string name="empty_store_subtitle">start adding products to the cart</string>
 
 
     <!-- Display Strings -->

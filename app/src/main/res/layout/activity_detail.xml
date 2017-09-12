@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
+    android:background="@color/colorWhite"
     android:fillViewport="true"
     tools:context="com.example.storeinventoryapp.viewcontroller.ProductEditorActivity">
 
@@ -17,98 +17,118 @@
         android:orientation="vertical">
 
         <LinearLayout
-            style="@style/EditorLlayout">
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:paddingLeft="4dp">
             <TextView
                 android:id="@+id/text_label_product"
-                style="@style/EditorLabel"
-                android:text="@string/label_product_name_1"/>
+                style="@style/CategoryStyle"
+                android:text="@string/label_product_name_detail"/>
 
             <TextView
                 android:id="@+id/text_product_name"
-                style="@style/DetailInput"
-                tools:text="@string/default_product_name"/>
+                style="@style/EditorFieldStyle" />
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditorLlayout"
-            android:weightSum="3">
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:paddingLeft="4dp">
             <TextView
                 android:id="@+id/text_label_price"
-                style="@style/EditorLabel"
-                android:text="@string/label_price_1"/>
+                style="@style/CategoryStyle"
+                android:text="@string/label_price_detail"/>
 
-            <TextView
-                style="@style/EditorLabelCurrency"/>
             <TextView
                 android:id="@+id/text_product_price"
-                style="@style/DetailInput"
-                android:layout_weight="1.8"
-                tools:text="@string/default_price"/>
+                style="@style/EditorFieldStyle" />
         </LinearLayout>
 
         <LinearLayout
-            style="@style/EditorLlayout">
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:paddingLeft="4dp">
             <TextView
                 android:id="@+id/text_label_supplier"
-                style="@style/EditorLabel"
-                android:text="@string/label_supplier_1"/>
+                style="@style/CategoryStyle"
+                android:text="@string/label_supplier_detail"/>
 
             <TextView
+                style="@style/EditorFieldStyle"
                 android:id="@+id/text_supplier_name"
-                style="@style/DetailInput"
-                tools:text="@string/label_supplier_1"/>
+                android:text="@string/label_supplier_detail" />
         </LinearLayout>
 
-        <LinearLayout
-            style="@style/EditorLlayout"
-            android:weightSum="3">
+
+
+
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="4dp">
+
             <TextView
+                style="@style/CategoryStyle"
+                android:paddingTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/text_label_email"
-                style="@style/EditorLabel"
-                android:text="@string/label_email_1"/>
+                android:text="@string/label_email_detail" />
 
-            <TextView
-                android:id="@+id/text_supplier_email"
-                style="@style/DetailInput"
-                android:layout_weight="1.7"
-                tools:text="@string/default_email"/>
+
             <ImageButton
+                android:layout_below="@id/text_label_email"
                 android:id="@+id/button_email"
-                style="@style/DetailActionButton"
-                android:src="@drawable/email"/>
+                android:layout_width="@dimen/dimen_50dp"
+                android:layout_height="@dimen/dimen_50dp"
+                android:background="@color/colorPrimaryDark"
+                android:src="@drawable/ic_email_white_36dp"/>
 
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/EditorLlayout"
-            android:weightSum="3">
             <TextView
+                style="@style/SupplierFieldStyle"
+                android:paddingTop="16dp"
+                android:paddingLeft="4dp"
+                android:id="@+id/text_supplier_email"
+                android:layout_below="@id/text_label_email"
+                android:layout_toRightOf="@+id/button_email" />
+
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:paddingTop="16dp"
+                android:layout_below="@id/button_email"
                 android:id="@+id/text_label_phone"
-                style="@style/EditorLabel"
-                android:text="@string/label_phone"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_phone_detail"/>
 
-            <TextView
-                android:id="@+id/text_supplier_phone"
-                style="@style/DetailInput"
-                android:layout_weight="1.7"
-                tools:text="@string/default_phone"/>
             <ImageButton
                 android:id="@+id/button_phone"
-                style="@style/DetailActionButton"
-                android:src="@drawable/phone"/>
+                android:layout_below="@+id/text_label_phone"
+                android:layout_width="@dimen/dimen_50dp"
+                android:layout_height="@dimen/dimen_50dp"
+                android:background="@color/colorPrimaryDark"
+                android:src="@drawable/ic_contact_phone_white_36dp"/>
+            <TextView
+                style="@style/SupplierFieldStyle"
+                android:paddingTop="16dp"
+                android:paddingLeft="4dp"
+                android:layout_below="@+id/text_label_phone"
+                android:id="@+id/text_supplier_phone"
+                android:layout_toRightOf="@id/button_phone" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/text_label_stock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_30dp"
-            android:tag="@string/tag_typeface_title"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryDark"
             android:gravity="center_horizontal"
-            android:textSize="@dimen/textsize_medium"
-            android:text="@string/label_stock_1"/>
+            android:textSize="@dimen/textsize_15sp"
+            android:text="@string/label_quantity_detail"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -118,28 +138,34 @@
 
             <ImageButton
                 android:id="@+id/button_decrease"
-                style="@style/DetailStockButton"
-                android:src="@drawable/minus_box"/>
+                android:layout_height="@dimen/dimen_50dp"
+                android:layout_width="@dimen/dimen_50dp"
+                android:background="@color/colorPrimaryDark"
+                android:src="@drawable/ic_remove_circle"/>
 
             <TextView
                 android:id="@+id/text_stock"
                 android:layout_toRightOf="@id/button_decrease"
-                style="@style/DetailStock"
-                tools:text="@string/default_stock"/>
+                android:layout_width="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_50dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:gravity="center"
+                android:textSize="@dimen/textsize_15sp" />
 
             <ImageButton
                 android:id="@+id/button_increase"
-                style="@style/DetailStockButton"
                 android:layout_toRightOf="@id/text_stock"
-                android:src="@drawable/plus_box"/>
+                android:src="@drawable/ic_add_circle_outline_white_36dp"
+                android:layout_height="@dimen/dimen_50dp"
+                android:layout_width="@dimen/dimen_50dp"
+                android:background="@color/colorPrimaryDark"/>
 
         </RelativeLayout>
 
         <ImageView
             android:id="@+id/image_product"
-            style="@style/EditorImageHolder"
-            android:layout_marginTop="@dimen/dimen_30dp"
-            android:contentDescription="@string/default_editor_image"/>
+            style="@style/ImageStyle"
+            android:layout_marginTop="@dimen/dimen_30dp" />
 
     </LinearLayout>
 
